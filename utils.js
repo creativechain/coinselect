@@ -42,8 +42,10 @@ function sumOrNaN (range) {
 
 var BLANK_OUTPUT = outputBytes({})
 
-function finalize (inputs, outputs, feeRate) {
+function finalize (inputs, outputs, feeRate, pushDataSize) {
   var bytesAccum = transactionBytes(inputs, outputs)
+  if (pushDataSize) bytesAccum += pushDataSize
+
   var feeAfterExtraOutput = feeRate * (bytesAccum + BLANK_OUTPUT)
   var remainderAfterExtraOutput = sumOrNaN(inputs) - (sumOrNaN(outputs) + feeAfterExtraOutput)
 
